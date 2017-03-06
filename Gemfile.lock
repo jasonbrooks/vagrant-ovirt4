@@ -24,9 +24,9 @@ GIT
 PATH
   remote: .
   specs:
-    vagrant-ovirt4 (1.1.0)
+    vagrant-ovirt4 (1.2.0)
       filesize (~> 0)
-      ovirt-engine-sdk (~> 4.0, >= 4.0.6)
+      ovirt-engine-sdk (~> 4.0.1)
 
 GEM
   remote: http://rubygems.org/
@@ -76,7 +76,7 @@ GEM
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     nori (2.6.0)
-    ovirt-engine-sdk (4.1.2)
+    ovirt-engine-sdk (4.0.12)
       json
     pry (0.10.4)
       coderay (~> 1.1.0)
