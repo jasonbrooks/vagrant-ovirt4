@@ -23,7 +23,7 @@ platforms:
       box_url: https://github.com/myoung34/vagrant-ovirt4/blob/master/example_box/dummy.box?raw=true
 
 suites:
-  - name: static_network
+  - name: singleton-static_network
     driver_config:
       vm_hostname: static
       customize:
