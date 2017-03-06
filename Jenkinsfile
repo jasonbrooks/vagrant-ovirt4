@@ -30,10 +30,8 @@ node {
             bundle install --path /opt/gemcache
             gem build *.gemspec
             /usr/bin/vagrant plugin install *.gem
-            # every now and then securerandom.uuid generates the same uuid
-            # because containers if they start at the exact same moment
             sleep \$(shuf -i 0-5 -n 1) 
-            bundle exec kitchen test all
+            bundle exec kitchen test ^parallel.*
           """
         }
 
@@ -41,6 +39,21 @@ node {
     }
     
     parallel( buildJobs )
+
+    for (int i = 0; i < vagrantVersions.length; i++) {
+
+      stage("vagrant-${vagrantVersion} singleton")
+      docker.image("myoung34/vagrant:${vagrantVersion}").inside('-v /opt/gemcache:/opt/gemcache') {
+        sh """#!/bin/bash -ex
+          bundle install --path /opt/gemcache
+          gem build *.gemspec
+          /usr/bin/vagrant plugin install *.gem
+          sleep \$(shuf -i 0-5 -n 1) 
+          bundle exec kitchen test ^[^parallel].*
+        """
+      }
+    }
+
   }
 
   stage("Cleanup") {
