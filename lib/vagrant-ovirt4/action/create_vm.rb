@@ -66,10 +66,12 @@ module VagrantPlugins
           begin
             server = env[:vms_service].add(attr) 
           rescue OvirtSDK4::Error => e
+            fault_message = /Fault detail is \"\[?(.+?)\]?\".*/.match(e.message)[1] rescue e.message
+            retry if e.message =~ /Related operation is currently in progress/
+
             if config.debug
               raise e
             else
-              fault_message = /Fault detail is \"\[?(.+?)\]?\".*/.match(e.message)[1] rescue e.message
               raise Errors::CreateVMError,
                 :error_message => fault_message
             end
@@ -87,7 +89,7 @@ module VagrantPlugins
             disk_attachments = disk_attachments_service.list
             disk_attachments.each do |disk_attachment|
               disk = env[:connection].follow_link(disk_attachment.disk)
-              if disk.status != 'ok'
+              if disk.status != 'ok' or env[:vms_service].vm_service(server.id).get.status != 'down'
                 ready = false
                 break
               end
