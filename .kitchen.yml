@@ -29,7 +29,7 @@ suites:
       customize:
         template: vagrant-centos7
       network:
-        - ["private_network", {ovirt__ip: <%= "192.168.2.#{Random.rand(240..254)}" %>, ovirt__network_name: 'ovirtmgmt', ovirt__gateway: 192.168.2.1, ovirt__netmask: 255.255.255.0, ovirt__dns_servers: 192.168.2.1}]
+        - ["private_network", {ovirt__ip: <%= "192.168.2.#{Random.rand(230..254)}" %>, ovirt__network_name: 'ovirtmgmt', ovirt__gateway: 192.168.2.1, ovirt__netmask: 255.255.255.0, ovirt__dns_servers: 192.168.2.1}]
   - name: dynamic_network
     driver_config:
       vm_hostname: dynamic
