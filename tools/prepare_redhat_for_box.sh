@@ -42,36 +42,36 @@ fi
 if [[ $ATOMIC != "true" ]]; then
   yum install -y epel-release
   yum install -y ovirt-guest-agent-common
-  if [[ $RHEL_MAJOR_VERSION -eq 5 ]]; then
-    yum install -y \
-      http://ftp.astral.ro/mirrors/fedora/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm \
-      https://yum.puppetlabs.com/puppetlabs-release-el-5.noarch.rpm
-  elif [[ $RHEL_MAJOR_VERSION -eq 6 ]]; then
-    yum install -y \
-      http://ftp.astral.ro/mirrors/fedora/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
-      https://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-  elif [[ $RHEL_MAJOR_VERSION -eq 7 ]]; then
-    yum install -y \
-      http://ftp.astral.ro/mirrors/fedora/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm \
-      https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+#  if [[ $RHEL_MAJOR_VERSION -eq 5 ]]; then
+#    yum install -y \
+#      http://ftp.astral.ro/mirrors/fedora/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm \
+#      https://yum.puppetlabs.com/puppetlabs-release-el-5.noarch.rpm
+#  elif [[ $RHEL_MAJOR_VERSION -eq 6 ]]; then
+#    yum install -y \
+#      http://ftp.astral.ro/mirrors/fedora/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
+#      https://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
+#  elif [[ $RHEL_MAJOR_VERSION -eq 7 ]]; then
+#    yum install -y \
+#      http://ftp.astral.ro/mirrors/fedora/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm \
+#      https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
   else
     echo "Is this a valid major release?"
     exit 1
   fi
-else
-  ostree remote add --set=gpg-verify=false centos-atomic-continuous https://ci.centos.org/artifacts/sig-atomic/rdgo/centos-continuous/ostree/repo/
-  rpm-ostree rebase centos-atomic-continuous:centos-atomic-host/${RHEL_MAJOR_VERSION}/x86_64/devel/alpha
-  rpm-ostree pkg-add epel-release
-  rpm-ostree install ovirt-guest-agent-common
-  systemctl reboot
+#else
+#  ostree remote add --set=gpg-verify=false centos-atomic-continuous https://ci.centos.org/artifacts/sig-atomic/rdgo/centos-continuous/ostree/repo/
+#  rpm-ostree rebase centos-atomic-continuous:centos-atomic-host/${RHEL_MAJOR_VERSION}/x86_64/devel/alpha
+#  rpm-ostree pkg-add epel-release
+#  rpm-ostree install ovirt-guest-agent-common
+#  systemctl reboot
 fi
 
 # Install some required software.
-if [[ $ATOMIC != "true" ]]; then
-  yum -y install openssh-server openssh-clients sudo curl \
-  ruby ruby-devel make gcc rubygems rsync puppet ovirt-guest-agent ovirt-guest-agent-common cloud-init \
-  iptables-services net-tools
-fi
+#if [[ $ATOMIC != "true" ]]; then
+#  yum -y install openssh-server openssh-clients sudo curl \
+#  ruby ruby-devel make gcc rubygems rsync puppet ovirt-guest-agent ovirt-guest-agent-common cloud-init \
+#  iptables-services net-tools
+#fi
 
 chkconfig sshd on
 
@@ -106,8 +106,8 @@ chkconfig iptables off
 chkconfig firewalld off
 chkconfig ip6tables off
 for i in cloud-init ovirt-guest-agent; do chkconfig $i on; done
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/sysconfig/selinux
-[ -f /etc/selinux/config ] && sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
+#sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/sysconfig/selinux
+#[ -f /etc/selinux/config ] && sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
 
 
 # Don't fix ethX names to hw address.
