@@ -39,9 +39,9 @@ fi
 
 
 # Enable EPEL and Puppet repositories.
-if [[ $ATOMIC != "true" ]]; then
-  yum install -y epel-release
-  yum install -y ovirt-guest-agent-common
+#if [[ $ATOMIC != "true" ]]; then
+#  yum install -y epel-release
+#  yum install -y ovirt-guest-agent-common
 #  if [[ $RHEL_MAJOR_VERSION -eq 5 ]]; then
 #    yum install -y \
 #      http://ftp.astral.ro/mirrors/fedora/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm \
@@ -54,17 +54,17 @@ if [[ $ATOMIC != "true" ]]; then
 #    yum install -y \
 #      http://ftp.astral.ro/mirrors/fedora/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm \
 #      https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-  else
-    echo "Is this a valid major release?"
-    exit 1
-  fi
+#  else
+#    echo "Is this a valid major release?"
+#    exit 1
+#  fi
 #else
 #  ostree remote add --set=gpg-verify=false centos-atomic-continuous https://ci.centos.org/artifacts/sig-atomic/rdgo/centos-continuous/ostree/repo/
 #  rpm-ostree rebase centos-atomic-continuous:centos-atomic-host/${RHEL_MAJOR_VERSION}/x86_64/devel/alpha
 #  rpm-ostree pkg-add epel-release
 #  rpm-ostree install ovirt-guest-agent-common
 #  systemctl reboot
-fi
+#fi
 
 # Install some required software.
 #if [[ $ATOMIC != "true" ]]; then
